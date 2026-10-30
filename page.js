@@ -39,6 +39,36 @@ document.addEventListener("click", (e) => {
   requestAnimationFrame(tick);
 })();
 
+// Buy form: n8n creates the Razorpay payment link, then we send the buyer there.
+(() => {
+  const form = document.getElementById("buy-form");
+  if (!form) return;
+  const msg = document.getElementById("buy-msg");
+  const say = (t, bad) => { msg.textContent = t; msg.classList.toggle("bad", !!bad); };
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = form.name.value.trim(), email = form.email.value.trim();
+    const phone = form.phone.value.replace(/[\s-]/g, "").replace(/^(\+91|91|0)(?=\d{10}$)/, "");
+    if (name.length < 2) return say("Please write your name.", true);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return say("Please check your email.", true);
+    if (!/^[6-9]\d{9}$/.test(phone)) return say("Please write a 10-digit Indian mobile number.", true);
+    const btn = form.querySelector("button");
+    btn.disabled = true; say("Opening the payment page...");
+    try {
+      const r = await fetch(form.dataset.url, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone, origin: location.origin }),
+      });
+      const data = await r.json();
+      if (!data.ok || !data.url) throw new Error(data.error || "failed");
+      location.href = data.url;
+    } catch (err) {
+      say(err.message && err.message !== "failed" && !/JSON|fetch/i.test(err.message) ? err.message : "Something went wrong. Please try again, or email gyaansharma22@gmail.com.", true);
+      btn.disabled = false;
+    }
+  });
+})();
+
 // Free plan form: save the lead in n8n, then download the PDF the webhook hands back.
 (() => {
   const form = document.getElementById("lead-form");

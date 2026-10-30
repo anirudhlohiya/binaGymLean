@@ -319,10 +319,15 @@
     </div>
     <div id="buy" class="buy" data-sc-in>
       <div class="price"><b>₹149</b><span>One time. Instant download.</span></div>
-      <form class="buy-form" onsubmit="return false">
-        <label for="email">Your email, to get the download link</label>
-        <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@gmail.com">
-        <button class="btn lime" type="submit">Get the 30-day plan</button>
+      <form class="buy-form" id="buy-form" novalidate data-url="https://n8n.snbajaj.com/webhook/bina-gym-lean-order">
+        <label for="b-name">Your name</label>
+        <input id="b-name" name="name" required autocomplete="name" maxlength="60">
+        <label for="b-email">Email, to get the download link</label>
+        <input id="b-email" name="email" type="email" required autocomplete="email" maxlength="120" placeholder="you@gmail.com">
+        <label for="b-phone">Mobile number</label>
+        <input id="b-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" maxlength="16" placeholder="10-digit mobile">
+        <button class="btn lime" type="submit">Pay ₹149 and get the plan</button>
+        <p class="form-msg" id="buy-msg" role="status" aria-live="polite"></p>
         <p class="fine">Pay safely with UPI, cards or netbanking through Razorpay. You get a download page right after paying, and the link by email. Digital product, see our <a href="refund.html">refund policy</a>.</p>
       </form>
     </div>
