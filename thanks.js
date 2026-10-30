@@ -20,7 +20,7 @@
         show("Thank you! Your plan is ready.", "Tap the button to download your 30-Day Home Fat-Loss Plan. We have also emailed you the link.");
         btn.href = d.file;
         btn.hidden = false;
-        note.textContent = `Order ${order}. The link works for 30 days. Save the PDF on your phone.`;
+        note.textContent = `Order ${order}. The link works for 7 days. Save the PDF on your phone.`;
         return;
       }
     } catch (e) { /* try again below */ }
